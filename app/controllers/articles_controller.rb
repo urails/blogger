@@ -1,12 +1,18 @@
 class ArticlesController < ApplicationController
-  before_filter :require_login, :except => [:index, :show]
+  #before_filter :require_login, :except => [:index, :show]
+
+  respond_to :html, :json
   
   def index
     @articles = Article.all
+
+    respond_with @articles
   end
 
   def show
     @article = Article.find(params[:id])
+
+    respond_with @article
   end
 
   def new
@@ -18,7 +24,7 @@ class ArticlesController < ApplicationController
 
     @article.save
 
-    redirect_to article_path(@article)
+    respond_with @article
   end
 
   def destroy
@@ -26,7 +32,7 @@ class ArticlesController < ApplicationController
 
     @article.destroy
 
-    redirect_to articles_path
+    respond_with @article
   end
 
   def edit
@@ -39,6 +45,6 @@ class ArticlesController < ApplicationController
 
     flash[:message] = "Article '#{@article.title}' Updated!"
 
-    redirect_to article_path(@article)
+    respond_with @article
   end
 end
